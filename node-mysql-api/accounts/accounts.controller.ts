@@ -1,9 +1,26 @@
 import express from 'express';
 import Joi from 'joi';
-import validateRequest from '../_middleware/validate-request';
 import authorize from '../_middleware/authorize';
 import Role from '../_helpers/role';
 import accountService from './account.service';
+
+function validateRequest(req: any, next: any, schema: any) {
+    const options = {
+        abortEarly: false,
+        allowUnknown: true,
+        stripUnknown: true
+    };
+
+    const { error, value } = schema.validate(req.body, options);
+
+    if (error) {
+        next(`Validation error: ${error.details.map((x: any) => x.message).join(', ')}`);
+        return;
+    }
+
+    req.body = value;
+    next();
+}
 
 const router = express.Router();
 

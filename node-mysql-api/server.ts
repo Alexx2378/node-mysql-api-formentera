@@ -2,7 +2,7 @@ import express from 'express';
 import bodyParser from 'body-parser';
 import cookieParser from 'cookie-parser';
 import cors from 'cors';
-import errorHandler from './_middleware/error-handler';
+const errorHandler = require('./_middleware/error-handler');
 import accountsController from './accounts/accounts.controller';
 import swaggerDocs from './_helpers/swagger';
 
