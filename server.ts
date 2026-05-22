@@ -15,22 +15,12 @@ app.use(bodyParser.json());
 app.use(cookieParser());
 
 // ─── CORS ─────────────────────────────────────────────────────────────────────
-// Supports multiple origins via comma-separated CORS_ORIGIN env var
-// e.g. CORS_ORIGIN=https://your-app.netlify.app,http://localhost:4200
-const allowedOrigins: string[] = process.env.CORS_ORIGIN
+const allowedOrigins = process.env.CORS_ORIGIN
     ? process.env.CORS_ORIGIN.split(',').map(o => o.trim())
     : ['http://localhost:4200'];
 
 app.use(cors({
-    origin: (origin, callback) => {
-        // allow requests with no origin (e.g. curl, Postman, same-origin)
-        if (!origin) return callback(null, true);
-        if (allowedOrigins.includes(origin)) {
-            return callback(null, true);
-        }
-        console.warn(`⚠️  CORS blocked origin: ${origin}`);
-        return callback(new Error(`CORS: origin '${origin}' not allowed`));
-    },
+    origin: allowedOrigins,
     credentials: true
 }));
 
