@@ -1,10 +1,8 @@
 import config from '../config.json';
 import { createConnection } from 'mysql2/promise';
 import { Sequelize } from 'sequelize';
-import refresTokenModel from '../accounts/refreshtoken.model';
-
-const accountModelModule = require('../accounts/account.model');
-const accountModel = accountModelModule.default || accountModelModule;
+import accountModel from '../accounts/account.model';
+import refresTokenModel from '../accounts/refresh-token.model';
 
 const db: any = {};
 export default db;
