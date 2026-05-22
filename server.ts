@@ -15,22 +15,8 @@ app.use(bodyParser.json());
 app.use(cookieParser());
 
 // ─── CORS ─────────────────────────────────────────────────────────────────────
-const allowedOrigins = [
-    process.env.CORS_ORIGIN || 'http://localhost:4200',
-    'http://localhost:4200'
-];
-
 app.use(cors({
-    origin: (origin: any, callback: any) => {
-        if (!origin) return callback(null, true);
-        const cleanOrigin = origin.trim().replace(/\/$/, '');
-        if (allowedOrigins.map(o => o.trim().replace(/\/$/, '')).includes(cleanOrigin)) {
-            callback(null, true);
-        } else {
-            console.warn(`⚠️ Blocked by CORS: ${origin}`);
-            callback(new Error('Not allowed by CORS'));
-        }
-    },
+    origin: process.env.CORS_ORIGIN || 'http://localhost:4200',
     credentials: true
 }));
 
