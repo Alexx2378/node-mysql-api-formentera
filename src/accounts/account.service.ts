@@ -79,7 +79,9 @@ async function revokeToken({ token, ipAddress }: any) {
 
 async function register(params: any, origin: any) {
     if (await db.Account.findOne({ where: { email: params.email } })) {
-        return await sendAlreadyRegisteredEmail(params.email, origin);
+        // silently attempt the "already registered" email — don't fail if SMTP is down
+        try { await sendAlreadyRegisteredEmail(params.email, origin); } catch (e) { console.error('⚠️ Could not send already-registered email:', e); }
+        return;
     }
 
     const account = db.Account.build(params);
@@ -91,7 +93,12 @@ async function register(params: any, origin: any) {
     account.passwordHash = await hash(params.password);
     await account.save();
 
-    await sendVerificationEmail(account, origin);
+    // attempt verification email — log but don't crash if SMTP is misconfigured
+    try {
+        await sendVerificationEmail(account, origin);
+    } catch (e) {
+        console.error('⚠️ Could not send verification email:', e);
+    }
 }
 
 // ─── VERIFY EMAIL ────────────────────────────────────────────────────────────
