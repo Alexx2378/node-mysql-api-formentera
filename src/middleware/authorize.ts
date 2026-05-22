@@ -1,7 +1,8 @@
 import { expressjwt } from 'express-jwt';
 import db from '../_helpers/db';
+import config from '../../node-mysql-api/config.json';
 
-const secret = process.env.JWT_SECRET as string;
+const secret = process.env.SECRET || process.env.JWT_SECRET || config.secret;
 
 export default function authorize(roles: any = []) {
     if (typeof roles === 'string') {
