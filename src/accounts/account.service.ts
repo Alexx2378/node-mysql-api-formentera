@@ -229,9 +229,10 @@ async function hash(password: string) {
 }
 
 function generateJwtToken(account: any) {
+    const secret = process.env.SECRET || process.env.JWT_SECRET || 'fallback_secret_do_not_use_in_prod';
     return jwt.sign(
         { sub: account.id, id: account.id, role: account.role },
-        process.env.JWT_SECRET as string,
+        secret,
         { expiresIn: '15m' }
     );
 }
