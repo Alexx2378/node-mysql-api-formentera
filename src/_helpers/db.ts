@@ -9,11 +9,11 @@ export default db;
 initialize();
 
 async function initialize() {
-    const host     = process.env.MYSQLHOST || config.database.host;
-    const port     = parseInt(process.env.MYSQLPORT || String(config.database.port));
-    const user     = process.env.MYSQLUSER || config.database.user;
-    const password = process.env.MYSQLPASSWORD || config.database.password;
-    const database = process.env.MYSQLDATABASE || config.database.database;
+    const host     = process.env.DB_HOST || process.env.MYSQLHOST || config.database.host;
+    const port     = parseInt(process.env.DB_PORT || process.env.MYSQLPORT || String(config.database.port));
+    const user     = process.env.DB_USER || process.env.MYSQLUSER || config.database.user;
+    const password = process.env.DB_PASSWORD || process.env.MYSQLPASSWORD || config.database.password;
+    const database = process.env.DB_NAME || process.env.MYSQLDATABASE || config.database.database;
 
     const sequelize = new Sequelize(database, user, password, {
         host,
