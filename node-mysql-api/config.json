@@ -1,9 +1,9 @@
 {
     "database": {
-        "host": "localhost",
+        "host": "153.92.15.31",
         "port": 3306,
-        "user": "root",
-        "password": "",
+        "user": "u875409848_2026_1",
+        "password": "s*3o^*xCA",
         "database": "node_mysql_api"
     },
     "secret": "SUPER_SECRET_KEY_REPLACE_ME_IN_PRODUCTION",
